@@ -1,32 +1,120 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+
+.App > footer {
+  margin-top: 1rem;
+}
+
+.app-header {
+  border-top: 5px solid #242331;
+  background-color: rgba(255, 253, 249, 0.7);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 6.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.app-header > section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.result-stats {
+  font-size: 1.1rem;
+  color: gray;
+  margin-left: 0.5rem;
+  letter-spacing: 0.2rem;
+}
+
+.search-box {
+  display: flex;
+  align-items: baseline;
+}
+
+.search-box span {
+  font-size: 2rem;
+  display: block;
+}
+.search-box input {
+  width: 100%;
+  font-size: 2.4rem;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  margin: 0 0.5rem;
+}
+
+main {
+  margin-top: 7.2rem;
+}
+
+.emoji-details {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+}
+.emoji-details p {
+  color: gray;
+}
+.emoji-details h2 {
+  font-size: 1.8rem;
+  margin: 0.1rem 0;
+}
+.emoji-details span {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+.emoji-details h4 {
+  font-size: 1.4rem;
+  margin-top: auto;
+  color: rgb(85, 85, 85);
+}
+
+
+.search-results {
+  display: flex;
+  flex-wrap: wrap;
+  line-height: 1;
+  justify-content: space-evenly;
+}
+
+.search-results::after {
+  content: "";
+  flex: auto;
+}
+
+.emoji-item {
+  cursor: pointer;
+  vertical-align: text-top;
+  color: #ccc;
+  min-width: 3.7rem;
+  height: 3.7rem;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  font-size: 2.9rem;
+  transition: all 0.2s ease-out;
+  font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji",
+  Times, Symbola, Aegyptus, Code2000, Code2001, Code2002, Musica, serif;
 }
 
-.App-link {
-  color: #61dafb;
+.emoji-item:hover {
+  text-shadow: 0 0 27px #FF3D00;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.content {
+  padding: 0.5rem;
 }
+
+.snackbar-close-btn {
+  cursor: pointer;
+}
+
