@@ -120,7 +120,7 @@ class App extends Component {
     const { emojis, searchTerm, selected, hover } = this.state
     const results = emojis
       .filter(e => 
-        e.name.concat(e.keywords).toLowerCase().indexOf(searchTerm) !== -1
+        e.name.concat(e.keywords).toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
       )
 
     return (
