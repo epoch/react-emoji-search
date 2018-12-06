@@ -23,8 +23,8 @@ function parseUnicodes(codes) {
 function EmojiDetails({ data }) {
   return <aside className="emoji-details">
     <p>{data.keywords}</p>
-    <h2><span>{data.char}</span> {data.name}</h2>
-    <h4>{parseUnicodes(data.codes)}</h4>
+    <h2>{data.name}</h2>
+    <h4><span>{data.char}</span>{parseUnicodes(data.codes)}</h4>
   </aside>
 }
 
@@ -141,6 +141,21 @@ class App extends Component {
         </header>
 
         <main>
+
+          <header className="app-header content hidden" style={{ position: 'static' }}>
+            <section>
+              <div className="search-box">
+                <input autoFocus={true} onChange={this.handleChange} type="text" placeholder="type to search" />
+              </div>
+              <section className="result-stats">
+                {`${results.length} / ${emojis.length} ${pluralize('emoji', 'emojis', results.length)}`}
+              </section>
+            </section>
+
+            {hover && <EmojiDetails data={this.state.hover} />}
+
+          </header>
+
           {this.renderSearchResults(results, searchTerm)}
         </main>
 
