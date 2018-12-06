@@ -1,5 +1,6 @@
 {
   "name": "react-emoji-browser",
+  "homepage" : "http://epoch.github.io/react-emoji-code-search",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
