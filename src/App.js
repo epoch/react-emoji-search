@@ -161,7 +161,7 @@ class App extends Component {
           }}
           message={<span id="message-id">html code {selected && parseUnicodes(selected.codes)} copied</span>}
           action={[
-            <div className="snackbar-close-btn" onClick={this.handleClose}>
+            <div key="close" className="snackbar-close-btn" onClick={this.handleClose}>
               &#x274C;
             </div>,
           ]}
