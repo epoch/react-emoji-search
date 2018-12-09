@@ -65,6 +65,20 @@ function SearchBar({ searchResults, allResults, onSearch }) {
   </section>
 }
 
+function SearchResults({ results, maxNumOfResults, onLoadMore, onSelect, onHover }) {
+  return <ul className="search-results" style={{ display: 'flex' }}>
+    {results.slice(0, maxNumOfResults).map(result => 
+      <EmojiItem 
+        key={result.no} 
+        data={result}
+        onSelect={onSelect}
+        onHover={onHover} 
+      />
+    )}
+    {maxNumOfResults < results.length && <button onClick={onLoadMore}>show more</button>}
+  </ul>    
+}
+
 
 class App extends Component {
 
@@ -73,13 +87,13 @@ class App extends Component {
     searchTerm: '',
     selected: null,
     hover: null,
-    amount: 400,
+    maxNumOfResults: 400,
     open: false
   }
 
   updateSearchTerm = debounce(event => {    
     this.setState({
-      amount: 400,
+      maxNumOfResults: 400,
       searchTerm: event.target.value
     })
   }, 30)
@@ -89,7 +103,7 @@ class App extends Component {
     this.updateSearchTerm(event)
   }
 
-  select = result => {
+  handleSelect = result => {
     copy(parseUnicodes(result.codes))
       .then(this.setState({ open: true }))
 
@@ -98,35 +112,18 @@ class App extends Component {
     })
   }
 
-  hover = result => {
+  handleHover = result => {
     this.setState({
       hover: result
     })
   }
 
-
-  loadMore = () => {
+  handleLoadMore = () => {
     this.setState(prevState => (
       {
-        amount: prevState.amount + 250
+        maxNumOfResults: prevState.maxNumOfResults + 250
       }
     ))
-  }
-
-  renderSearchResults = (results, searchTerm) => {
-
-    const { amount } = this.state
-    return <ul className="search-results" style={{ display: 'flex' }}>
-      {results.slice(0,amount).map(result => 
-        <EmojiItem 
-          key={result.no} 
-          data={result}
-          onSelect={this.select}
-          onHover={this.hover} 
-        />
-      )}
-      {amount < results.length && <button onClick={this.loadMore}>show more</button>}
-    </ul>   
   }
 
   handleClose = () => this.setState({ open: false })
@@ -138,7 +135,7 @@ class App extends Component {
       )
 
   render() {
-    const { emojis, searchTerm, selected, hover } = this.state
+    const { emojis, searchTerm, selected, hover, maxNumOfResults } = this.state
     const results = this.filterEmojis(emojis, searchTerm)
 
     return (
@@ -164,7 +161,13 @@ class App extends Component {
             {hover && <EmojiDetails data={this.state.hover} />}
           </header>
 
-          {this.renderSearchResults(results, searchTerm)}
+          <SearchResults 
+            results={results}
+            maxNumOfResults={maxNumOfResults}
+            onSelect={this.handleSelect}
+            onHover={this.handleHover}
+            onLoadMore={this.handleLoadMore}
+          />
         </main>
 
         <footer className="content">
