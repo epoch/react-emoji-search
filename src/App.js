@@ -50,6 +50,21 @@ class EmojiItem extends React.Component {
   }
 }
 
+function SearchBar({ searchResults, allResults, onSearch }) {
+  return <section className="search-bar">
+    <input
+      className="search-input" 
+      autoFocus={true} 
+      onChange={onSearch} 
+      type="text" 
+      placeholder="type to search" 
+    />
+    <section className="result-stats">
+      {`${searchResults.length} / ${allResults.length} ${pluralize('result', 'results', searchResults.length)}`}
+    </section>
+  </section>
+}
+
 
 class App extends Component {
 
@@ -116,44 +131,37 @@ class App extends Component {
 
   handleClose = () => this.setState({ open: false })
 
-  render() {
-    const { emojis, searchTerm, selected, hover } = this.state
-    const results = emojis
+  filterEmojis = (emojis, searchTerm) => 
+    emojis
       .filter(e => 
         e.name.concat(e.keywords).toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
       )
+
+  render() {
+    const { emojis, searchTerm, selected, hover } = this.state
+    const results = this.filterEmojis(emojis, searchTerm)
 
     return (
       <div className="App">
 
         <header className="app-header content">
-          <section>
-            <div className="search-box">
-              <input autoFocus={true} onChange={this.handleChange} type="text" placeholder="type to search" />
-            </div>
-            <section className="result-stats">
-              {`${results.length} / ${emojis.length} ${pluralize('emoji', 'emojis', results.length)}`}
-            </section>
-          </section>
-
+          <SearchBar 
+            searchResults={results}
+            allResults={emojis}
+            onSearch={this.handleChange}
+          />
           {hover && <EmojiDetails data={this.state.hover} />}
-
         </header>
 
         <main>
 
           <header className="app-header content hidden" style={{ position: 'static' }}>
-            <section>
-              <div className="search-box">
-                <input autoFocus={true} onChange={this.handleChange} type="text" placeholder="type to search" />
-              </div>
-              <section className="result-stats">
-                {`${results.length} / ${emojis.length} ${pluralize('emoji', 'emojis', results.length)}`}
-              </section>
-            </section>
-
+            <SearchBar 
+              searchResults={results}
+              allResults={emojis}
+              onSearch={this.handleChange}
+            />
             {hover && <EmojiDetails data={this.state.hover} />}
-
           </header>
 
           {this.renderSearchResults(results, searchTerm)}
