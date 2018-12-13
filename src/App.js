@@ -4,81 +4,17 @@ import emojis from './emojis'
 import debounce from 'lodash/debounce'
 import { withStyles } from '@material-ui/core/styles'
 import Snackbar from '@material-ui/core/Snackbar'
+import SearchBar from './SearchBar'
+import SearchResults from './SearchResults'
+import EmojiDetails from './EmojiDetails'
 import copy from 'clipboard-copy'
+import { parseUnicodes } from './utils'
 
 const styles = theme => ({
   close: {
     padding: theme.spacing.unit / 2,
   },
 })
-
-function pluralize(wordSingular, wordPlural, num) {
-  return num === 1 ? wordSingular : wordPlural
-}
-
-function parseUnicodes(codes) {
-  return codes.split(' ').map(code => `&#${parseInt(code, 16)};`).join('')
-}
-
-function EmojiDetails({ data }) {
-  return <aside className="emoji-details">
-    <p>{data.keywords}</p>
-    <h2>{data.name}</h2>
-    <h4><span>{data.char}</span>{parseUnicodes(data.codes)}</h4>
-  </aside>
-}
-
-class EmojiItem extends React.Component {
-
-  handleHover = () => this.props.onHover(this.props.data)
-  handleClick = () => this.props.onSelect(this.props.data)
-
-  shouldComponentUpdate = (nextProps) => {
-    return this.props.data.no !== nextProps.data.no
-  }
-
-  render() {
-    const { data } = this.props
-    return <li
-      title="click to copy" 
-      className={`emoji-item`}
-      onClick={this.handleClick}
-      onMouseOver={this.handleHover} 
-      key={data.no}>
-      {data.char}
-    </li>
-  }
-}
-
-function SearchBar({ searchResults, allResults, onSearch }) {
-  return <section className="search-bar">
-    <input
-      className="search-input" 
-      autoFocus={true} 
-      onChange={onSearch} 
-      type="text" 
-      placeholder="type to search" 
-    />
-    <section className="result-stats">
-      {`${searchResults.length} / ${allResults.length} ${pluralize('result', 'results', searchResults.length)}`}
-    </section>
-  </section>
-}
-
-function SearchResults({ results, maxNumOfResults, onLoadMore, onSelect, onHover }) {
-  return <ul className="search-results" style={{ display: 'flex' }}>
-    {results.slice(0, maxNumOfResults).map(result => 
-      <EmojiItem 
-        key={result.no} 
-        data={result}
-        onSelect={onSelect}
-        onHover={onHover} 
-      />
-    )}
-    {maxNumOfResults < results.length && <button onClick={onLoadMore}>show more</button>}
-  </ul>    
-}
-
 
 class App extends Component {
 
@@ -151,7 +87,6 @@ class App extends Component {
         </header>
 
         <main>
-
           <header className="app-header content hidden" style={{ position: 'static' }}>
             <SearchBar 
               searchResults={results}
