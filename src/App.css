@@ -54,7 +54,6 @@ main {
 }
 
 .emoji-details {
-  
   display: flex;
   flex-direction: column;
 }
@@ -77,11 +76,11 @@ main {
   line-height: 1;
 }
 .emoji-details h4 {
-  font-size: 1.1rem;
-  margin-top: auto;
+  display: none;
+  font-size: 0.8rem;
+  margin-top: 3px;
   color: rgb(85, 85, 85);
 }
-
 
 .search-results {
   display: flex;
@@ -114,6 +113,19 @@ main {
   text-shadow: 0 0 27px #FF3D00;
 }
 
+.code-type-radio {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 0.2rem;
+}
+
+.tip {
+  font-size: 0.875rem;
+  line-height: 1;
+  margin: 0.2rem 0.4rem 0.2rem 0;
+}
+
 .content {
   padding: 0.5rem;
 }
@@ -141,10 +153,14 @@ main {
     font-size: 1.8rem;
   }
   .emoji-details h4 {
-    font-size: 1.4rem;
-  }  
-  .emoji-details span {
+    font-size: 1rem;
     display: block;
   }  
+  .emoji-details span {
+    display: inline;
+  }  
+  div.radio-group {
+    flex-direction: row;
+  }
 }
 

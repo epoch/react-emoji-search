@@ -24,7 +24,8 @@ class App extends Component {
     selected: null,
     hover: null,
     maxNumOfResults: 400,
-    open: false
+    open: false,
+    selectedCodeType: 'character'
   }
 
   updateSearchTerm = debounce(event => {    
@@ -62,7 +63,25 @@ class App extends Component {
     ))
   }
 
+  handleCodeTypeSelect = type => {
+    this.setState({
+      selectedCodeType: type
+    })
+  }
+
   handleClose = () => this.setState({ open: false })
+
+  selectedCode = selected => {
+    const { selectedCodeType } = this.state
+    switch (selectedCodeType) {
+      case 'character':
+        return selected.char
+      case 'html':
+        return parseUnicodes(selected.codes)
+      case 'hex':
+        return selected.codes
+    }
+  }
 
   filterEmojis = (emojis, searchTerm) => 
     emojis
@@ -71,8 +90,9 @@ class App extends Component {
       )
 
   render() {
-    const { emojis, searchTerm, selected, hover, maxNumOfResults } = this.state
+    const { emojis, searchTerm, selected, hover, maxNumOfResults, selectedCodeType } = this.state
     const results = this.filterEmojis(emojis, searchTerm)
+    const data = { ...hover, code: hover ? this.selectedCode(hover) : '' }
 
     return (
       <div className="App">
@@ -82,8 +102,10 @@ class App extends Component {
             searchResults={results}
             allResults={emojis}
             onSearch={this.handleChange}
+            selectedCodeType={this.state.selectedCodeType}
+            onCodeTypeSelect={this.handleCodeTypeSelect}
           />
-          {hover && <EmojiDetails data={this.state.hover} />}
+          {hover && <EmojiDetails data={data} />}
         </header>
 
         <main>
@@ -93,7 +115,7 @@ class App extends Component {
               allResults={emojis}
               onSearch={this.handleChange}
             />
-            {hover && <EmojiDetails data={this.state.hover} />}
+            {hover && <EmojiDetails data={data} />}
           </header>
 
           <SearchResults 
@@ -120,7 +142,7 @@ class App extends Component {
           ContentProps={{
             'aria-describedby': 'message-id',
           }}
-          message={<span id="message-id">html code {selected && parseUnicodes(selected.codes)} copied</span>}
+          message={<span id="message-id">{selected && this.selectedCode(selected)} copied</span>}
           action={[
             <div key="close" className="snackbar-close-btn" onClick={this.handleClose}>
               &#x274C;
