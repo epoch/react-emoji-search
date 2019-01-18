@@ -41,7 +41,7 @@ class App extends Component {
   }
 
   handleSelect = result => {
-    copy(parseUnicodes(result.codes))
+    copy(this.selectedCode(result))
       .then(this.setState({ open: true }))
 
     this.setState({
