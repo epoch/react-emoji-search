@@ -1,8 +1,8 @@
 # emoji search and viewer
 
-[demo](https://epoch.github.io/react-emoji-search/)
-
 Simple react app for searching emojis.
+
+[demo](https://epoch.github.io/react-emoji-search/)
 
 # features
 
