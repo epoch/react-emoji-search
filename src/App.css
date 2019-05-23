@@ -21,12 +21,10 @@
   align-content: space-evenly;
 }
 .app-header > aside { 
-  /* border: 1px solid red; */
   flex-grow: 3;
   flex-basis: 20em;
 }
 .app-header > section {
-  /* border: 1px solid green; */
   flex-grow: 1;
   flex-basis: 20em;
   display: flex;
